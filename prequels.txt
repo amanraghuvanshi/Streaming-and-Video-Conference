@@ -1,0 +1,16 @@
+Video Conferencing and Live Streaming
+
+There will be three components:
+
+1) Routes: Fiber	
+	We will have room here, that will have the operation that are being performed
+
+2) WebSockets: Websocket/Fiber
+	This helps us in chatting with the other person that are there in the room,
+	
+3) Stream: WebRTC
+	This will be supporting our streaming
+<------------------------------------------------->
+	
+
+				
