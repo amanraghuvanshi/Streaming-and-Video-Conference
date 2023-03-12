@@ -11,6 +11,8 @@ There will be three components:
 3) Stream: WebRTC
 	This will be supporting our streaming
 <------------------------------------------------->
+
+We will also use the docker
 	
 
 				
