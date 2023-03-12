@@ -13,6 +13,8 @@ There will be three components:
 <------------------------------------------------->
 
 We will also use the docker
+
+So, around the concept of Video Conferencing is based on the theory of  room. So its similar to how the people sit in a room and they discuss their stuffs. So here in this project we are creating the rooms, in which people having the link can join and they can talk and broadcast their messages.
 	
 
 				

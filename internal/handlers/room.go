@@ -8,14 +8,17 @@ import (
 	gguid "github.com/google/uuid"
 )
 
-func createOrGetRoom(uuid string) (string, string, string) {
+// this will be the function that will create or get the room.
+func createOrGetRoom(uuid string) (string, string, room) {
 
 }
 
+// this will get the room ID and connection string
 func RoomCreate(c *fiber.Ctx) error {
 	return c.Redirect(fmt.Sprintf("/room/%s", gguid.New().String()))
 }
 
+// this function will be getting the room if it exists, otherwise it will create the room
 func Room(c *fiber.Ctx) error {
 	uuid := c.Params("uuid")
 	if uuid == "" {
@@ -26,6 +29,7 @@ func Room(c *fiber.Ctx) error {
 	uuid, suuid, _ := createOrGetRoom(uuid)
 }
 
+// this will create the room with uuid
 func Roomwebsocket(c *websocket.Conn) {
 	uuid := c.Params("uuid")
 	if uuid == "" {
