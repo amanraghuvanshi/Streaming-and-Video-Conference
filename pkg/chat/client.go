@@ -57,8 +57,44 @@ func (c *Client) ReadPump() {
 	}
 }
 
-func (c *Client) WritePump() {
+// we want to write the messages, with correct time.
+//  when we get the message we write message using the nextWriter function and access to message using websocket.textMessage
 
+func (c *Client) WritePump() {
+	ticker := time.NewTicker(pingPeriod)
+	defer func() {
+		ticker.Stop()
+		c.Connection.Close()
+	}()
+
+	for {
+		select {
+		case message, ok := <-c.Send:
+			c.Connection.SetWriteDeadline(time.Now().Add(writeWait))
+			if !ok {
+				return
+			}
+			w, err := c.Connection.NextWriter(websocket.TextMessage)
+			if err != nil {
+				return
+			}
+			w.Write(message)
+
+			n := len(c.Send)
+			for i := 0; i < n; i++ {
+				w.Write(newLine)
+				w.Write(<-c.Send)
+			}
+			if err := w.Close(); err != nil {
+				return
+			}
+		case <-ticker.C:
+			c.Connection.SetWriteDeadline(time.Now().Add(writeWait))
+			if err := c.Connection.WriteMessage(websocket.PingMessage, nil); err != nil {
+				return
+			}
+		}
+	}
 }
 
 func PeerChatConn(c *websocket.Conn, hub *Hub) {
