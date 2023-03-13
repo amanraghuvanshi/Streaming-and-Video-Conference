@@ -3,13 +3,27 @@ package handlers
 import (
 	"fmt"
 
+	w "github.com/amanraghuvanshi/videostreaming/pkg/webrtc"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/websocket/v2"
 	gguid "github.com/google/uuid"
 )
 
+type websocketMessage struct {
+	Event string `json:"event"`
+	Data  string `json:"data"`
+}
+
 // this will be the function that will create or get the room.
-func createOrGetRoom(uuid string) (string, string, room) {
+func createOrGetRoom(uuid string) (string, string, *w.Room) {
+
+}
+
+func RomViewerWebsocket(c *websocket.Conn) {
+
+}
+
+func roomViewerConn(c *websocket.Conn, p *w.Peers) {
 
 }
 
@@ -36,5 +50,5 @@ func Roomwebsocket(c *websocket.Conn) {
 		return
 	}
 	_, _, room := createOrGetRoom(uuid)
-
+	w.RoomConn(c, room.Peers)
 }
